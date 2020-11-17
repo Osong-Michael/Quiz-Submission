@@ -1,0 +1,19 @@
+const deleteAndEarn = function(nums) {
+    const numTotals = new Map();
+    
+    nums.forEach(num => {
+        const total = numTotals.get(num) || 0;
+        numTotals.set(num, total + num); 
+    });
+    
+    let prevMaxPoints = 0;
+    let maxPoints = numTotals.get(1) || 0;
+    for (let num = 2; num <= 10000; num++) {
+        const thisPoints = numTotals.get(num) || 0;
+        const newMaxPoints = Math.max(maxPoints, thisPoints + prevMaxPoints);
+        prevMaxPoints = maxPoints;
+        maxPoints = newMaxPoints;        
+    }
+    
+    return maxPoints;
+};
