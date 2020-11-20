@@ -7,21 +7,29 @@ import BarChart from './BarChart';
 
 export default function App() {
   const newData = _.merge(data.spending, data.income);
+  console.log(newData);
+  const monthOfYear = (num) => {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return months[num-1];
+  };
   const spent = newData[0].spending;
   const incoming = newData[0].income;
+  const newDate = newData[0].month;
   const newState = {
     spent,
     incoming,
+    date: monthOfYear(newDate),
   };
 
   const [state, setState] = useState(newState);
   const bHeigth = data.overall_budget / 10;
-  
+
 
   const _onPressButton = (data) => {
     setState({
       spent: data.spending,
       incoming: data.income,
+      date: monthOfYear(data.month),
     });
   }
 
@@ -54,7 +62,7 @@ export default function App() {
   
   return (
     <View style={styles.container}>
-      <Text style={styles.textBoro}>October</Text>
+      <Text style={styles.textBoro}>{state.date}</Text>
       <View style={{width: 250, flexDirection: 'row',}}>
         <Text style={styles.spending}><View style={StyleSheet.flatten(styleCircle1)} />Spending</Text>
         <Text style={styles.income}><View style={StyleSheet.flatten(styleCircle2)} />Income</Text>
@@ -99,3 +107,4 @@ const styles = StyleSheet.create({
     paddingLeft: 25,
   }
 });
+
